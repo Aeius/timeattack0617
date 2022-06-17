@@ -40,7 +40,7 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)  # 계정활성화 여부
     is_admin = models.BooleanField(default=True)  # 관리자 계정 여부
 
-    user_type = models.OneToOneField(UserType, on_delete=models.CASCADE, null=True)
+    user_type = models.ForeignKey(UserType, on_delete=models.CASCADE, null=True)
 
     USERNAME_FIELD = 'email'  # 로그인 시 사용할 필드 지정
     REQUIRED_FIELDS = []  # createsuperuser 할 때 추가로 요구할 필드 지정

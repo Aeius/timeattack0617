@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import permissions
 from django.contrib.auth import login, authenticate, logout
-from user.models import User
+from user.models import *
 
 from django.contrib.auth.hashers import make_password
 
@@ -11,8 +11,9 @@ class UserSignView(APIView):
         email = request.data.get('email', '')
         password = request.data.get('password', '')
         user_type = request.data.get('user_type', '')
+        usertype = UserType.objects.get(name=user_type)
         hashed_pwd = make_password(password, salt=None, hasher='default')
-        User.objects.create(email=email, user_type=user_type, password=hashed_pwd)
+        User.objects.create(email=email, user_type=usertype, password=hashed_pwd)
         return Response(f"{email}님 회원가입 성공!!")
 
 class UserLoginView(APIView):
